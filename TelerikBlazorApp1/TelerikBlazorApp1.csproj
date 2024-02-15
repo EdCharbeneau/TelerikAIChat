@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <UserSecretsId>dc9b9c19-d2d7-4b1b-95db-288c6b6b5bc4</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+        <ProjectReference Include="..\TelerikBlazorApp1.Client\TelerikBlazorApp1.Client.csproj" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.2" />
+        <PackageReference Include="OpenAI" Version="1.10.0" />
+	  <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.0" />
+	  <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+        <PackageReference Include="Telerik.UI.for.Blazor" Version="5.1.1" />
+  </ItemGroup>
+
+</Project>
