@@ -10,18 +10,7 @@ namespace TelerikBlazorApp1
     {
         public async Task<string> MakeAiRequest(string prompt)
         {
-            OpenAIClient client = new OpenAIClient(config["OpenAiKey"]
-                , new OpenAIClientOptions());
-            //    var api = new OpenAI_API.OpenAIAPI(config["OpenAiKey"]);
-            //    var result = await api.Chat.CreateChatCompletionAsync(new ChatRequest()
-            //    {
-            //        Model = Model.ChatGPTTurbo,
-            //        Temperature = 0.5,
-            //        MaxTokens = 500,
-            //        Messages = new ChatMessage[] {
-            //    new ChatMessage(ChatMessageRole.User, prompt)
-            //}
-            //    });
+            OpenAIClient client = new OpenAIClient(config["OpenAiKey"], new OpenAIClientOptions());
             var chatCompletionsOptions = new ChatCompletionsOptions()
             {
                 DeploymentName = "gpt-3.5-turbo", // Use DeploymentName for "model" with non-Azure clients

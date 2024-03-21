@@ -6,13 +6,14 @@
                      @bind-Prompt="@Prompt"
                      Commands="@PromptCommands"
                      OnPromptRequest="@HandlePromptRequest"
+                     OnCommandExecute="@HandleCommandExecute"
                      Width="500px">
     </TelerikAIPrompt>
 </div>
 
 @code {
     public string Prompt { get; set; } = "";
-    public TelerikAIPrompt AIPromptRef { get; set; } = new();
+    public TelerikAIPrompt? AIPromptRef { get; set; }
     public List<AIPromptCommandDescriptor> PromptCommands { get; set; } = new List<AIPromptCommandDescriptor>()
     {
         new AIPromptCommandDescriptor() { Title = "Rewrite in personal voice", Icon = SvgIcon.Pencil },
@@ -39,9 +40,9 @@
         args.Output = result;
     }
 
-    public void HandleCommandExecute(AIPromptCommandDescriptor command)
+    public void HandleCommandExecute(AIPromptCommandExecuteEventArgs args)
     {
-        AIPromptRef.AddOutput("This represents the generated output from the AI in response to the submitted request.", command.Title, null, null, command.Id, true);
+        args.Output = $"executed command {args.Command.Title}";
     }
 }
 
