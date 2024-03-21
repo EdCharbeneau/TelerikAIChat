@@ -1,7 +1,6 @@
 ﻿@page "/"
 @inject IOpenAiService service
 
-
 <div>
     <TelerikAIPrompt @ref="@AIPromptRef"
                      @bind-Prompt="@Prompt"
@@ -9,13 +8,11 @@
                      OnPromptRequest="@HandlePromptRequest"
                      Width="500px">
     </TelerikAIPrompt>
-    <TelerikLoader Visible="isLoading"></TelerikLoader>
 </div>
 
 @code {
-    public bool isLoading = false;
-    public string Prompt { get; set; }
-    public TelerikAIPrompt AIPromptRef { get; set; }
+    public string Prompt { get; set; } = "";
+    public TelerikAIPrompt AIPromptRef { get; set; } = new();
     public List<AIPromptCommandDescriptor> PromptCommands { get; set; } = new List<AIPromptCommandDescriptor>()
     {
         new AIPromptCommandDescriptor() { Title = "Rewrite in personal voice", Icon = SvgIcon.Pencil },
