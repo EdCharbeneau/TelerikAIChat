@@ -1,6 +1,7 @@
 ﻿@page "/"
+@using TelerikBlazorApp1.Client.Services
 @inject IOpenAiService service
-
+@inject ConversationState state
 <div>
     <TelerikAIPrompt @ref="@AIPromptRef"
                      @bind-Prompt="@Prompt"
@@ -38,11 +39,17 @@
     {
         string result = await service.MakeAiRequest(args.Prompt);
         args.Output = result;
+        state.Add(new(result, args.Prompt, DateTime.UtcNow));
+
     }
 
-    public void HandleCommandExecute(AIPromptCommandExecuteEventArgs args)
+    public async Task HandleCommandExecute(AIPromptCommandExecuteEventArgs args)
     {
-        args.Output = $"executed command {args.Command.Title}";
+        AiConversation chat = new(Prompt, state.ChatHistory.Last().Output);
+        string result = await service.MakeAiRequest(chat);
+        //args.Output = $"executed command {state.ChatHistory.Last().Output} - {args.Command.Title}";
+        args.Output = result;
+        state.Add(new(args.Output, args.Command.Title, DateTime.UtcNow));
     }
 }
 
