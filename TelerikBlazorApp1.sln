@@ -3,9 +3,27 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelerikBlazorApp1", "TelerikBlazorApp1\TelerikBlazorApp1.csproj", "{5C96CEFC-A5EE-4849-833F-E78BF2C43A91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TelerikBlazorApp1", "TelerikBlazorApp1\TelerikBlazorApp1.csproj", "{5C96CEFC-A5EE-4849-833F-E78BF2C43A91}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelerikBlazorApp1.Client", "TelerikBlazorApp1.Client\TelerikBlazorApp1.Client.csproj", "{A1B0A0C3-F73A-42E8-ADBA-F1BCC1B6B4B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TelerikBlazorApp1.Client", "TelerikBlazorApp1.Client\TelerikBlazorApp1.Client.csproj", "{A1B0A0C3-F73A-42E8-ADBA-F1BCC1B6B4B7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Baked", "Baked", "{AE9D5862-3058-4939-A351-35552356E81D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TelerikBlazorAppDemo", "TelerikBlazorAppDemo\TelerikBlazorAppDemo\TelerikBlazorAppDemo.csproj", "{0FFF628A-423C-4E29-A07F-1231A7425D91}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TelerikBlazorAppDemo.Client", "TelerikBlazorAppDemo\TelerikBlazorAppDemo.Client\TelerikBlazorAppDemo.Client.csproj", "{D99BEA68-A30E-43AE-B664-57E62DA212AF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CheatCodes", "CheatCodes", "{4EC398ED-539C-498D-9BB6-EBD742B881A5}"
+	ProjectSection(SolutionItems) = preProject
+		01-home.razor.md = 01-home.razor.md
+		02-client-OpenAiFakeService.cs.md = 02-client-OpenAiFakeService.cs.md
+		03-Home.razor.md = 03-Home.razor.md
+		04-server-Program.cs.md = 04-server-Program.cs.md
+		05-Nuget-Azure.OpenAI-preview.md = 05-Nuget-Azure.OpenAI-preview.md
+		06-server-OpenAiService.cs.md = 06-server-OpenAiService.cs.md
+		07-server.Program.cs.md = 07-server.Program.cs.md
+		08-client.OpenAiHttpService.cs.md = 08-client.OpenAiHttpService.cs.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,9 +39,21 @@ Global
 		{A1B0A0C3-F73A-42E8-ADBA-F1BCC1B6B4B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1B0A0C3-F73A-42E8-ADBA-F1BCC1B6B4B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1B0A0C3-F73A-42E8-ADBA-F1BCC1B6B4B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FFF628A-423C-4E29-A07F-1231A7425D91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FFF628A-423C-4E29-A07F-1231A7425D91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FFF628A-423C-4E29-A07F-1231A7425D91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FFF628A-423C-4E29-A07F-1231A7425D91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D99BEA68-A30E-43AE-B664-57E62DA212AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D99BEA68-A30E-43AE-B664-57E62DA212AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D99BEA68-A30E-43AE-B664-57E62DA212AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D99BEA68-A30E-43AE-B664-57E62DA212AF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5C96CEFC-A5EE-4849-833F-E78BF2C43A91} = {AE9D5862-3058-4939-A351-35552356E81D}
+		{A1B0A0C3-F73A-42E8-ADBA-F1BCC1B6B4B7} = {AE9D5862-3058-4939-A351-35552356E81D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {78B82827-2354-4D76-8297-7A8C18D51E13}
