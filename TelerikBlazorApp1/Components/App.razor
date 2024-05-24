@@ -9,14 +9,14 @@
     <link rel="stylesheet" href="app.css" />
     <link rel="stylesheet" href="TelerikBlazorApp1.styles.css" />
     <link rel="icon" type="image/png" href="favicon.png" />
-    <HeadOutlet @rendermode="@RenderMode.InteractiveAuto" />
+    <HeadOutlet @rendermode="new InteractiveWebAssemblyRenderMode(prerender: false)"  />
 
     <link rel="stylesheet" href="lib/blazor-ui/swatches/default-ocean-blue-a11y.css" />
     <script src="_content/Telerik.UI.for.Blazor/js/telerik-blazor.js" defer></script>
 </head>
 
 <body>
-    <Routes @rendermode="@RenderMode.InteractiveAuto" />
+    <Routes @rendermode="new InteractiveWebAssemblyRenderMode(prerender: false)" />
     <script src="_framework/blazor.web.js"></script>
 </body>
 

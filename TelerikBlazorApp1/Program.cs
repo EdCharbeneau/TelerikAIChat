@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.JSInterop;
+using TelerikBlazorApp1;
 using TelerikBlazorApp1.Client;
 using TelerikBlazorApp1.Client.Pages;
 using TelerikBlazorApp1.Client.Services;
@@ -17,7 +19,7 @@ builder.Services.AddScoped<ConversationState>();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
-    .AddInteractiveServerComponents()
+    //.AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
 
 builder.Services.AddTelerikBlazor();
@@ -44,25 +46,11 @@ app.UseStaticFiles();
 app.UseAntiforgery();
 
 app.MapRazorComponents<App>()
-    .AddInteractiveServerRenderMode()
+    //.AddInteractiveServerRenderMode()
     .AddInteractiveWebAssemblyRenderMode()
     .AddAdditionalAssemblies(typeof(Counter).Assembly);
 
-app.MapPost($"/openai", async (
-    [FromBody] string prompt,
-    [FromServices] IOpenAiService openAi) =>
-     await openAi.MakeAiRequest(prompt)
-     )
-.WithName("OpenAI")
-.WithOpenApi();
-
-app.MapPost($"/openai", async (
-    [FromBody] AiConversation chat,
-    [FromServices] IOpenAiService openAi) =>
-     await openAi.MakeAiRequest(chat)
-     )
-.WithName("OpenAIChat")
-.WithOpenApi();
+app.MapApplicationEndpoints();
 
 app.Run();
 

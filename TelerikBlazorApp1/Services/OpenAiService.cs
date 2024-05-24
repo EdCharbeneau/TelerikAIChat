@@ -6,14 +6,29 @@ using TelerikBlazorApp1.Client.Services;
 
 namespace TelerikBlazorApp1.Services
 {
-    public class OpenAiService(IConfiguration config) : IOpenAiService
+    public class OpenAiService : IOpenAiService
     {
+        private Uri endpoint;
+        private AzureKeyCredential apiKey;
+        private string deployment;
+
+        public OpenAiService(IConfiguration config)
+        {
+            endpoint = new(config["Endpoint"]
+                ?? throw new MissingConfigurationException());
+            apiKey = new(config["ApiKey"]
+                ?? throw new MissingConfigurationException());
+            deployment = new(config["DeploymentName"]
+                ?? throw new MissingConfigurationException());
+        }
+
         public async Task<string> MakeAiRequest(string prompt)
         {
-            OpenAIClient client = new OpenAIClient(config["OpenAiKey"], new OpenAIClientOptions());
+            OpenAIClient client = new OpenAIClient(endpoint, apiKey);
+
             var chatCompletionsOptions = new ChatCompletionsOptions()
             {
-                DeploymentName = "gpt-3.5-turbo", // Use DeploymentName for "model" with non-Azure clients
+                DeploymentName = deployment, // Use DeploymentName for "model" with non-Azure clients
                 Messages =
                 {
                     new ChatRequestUserMessage(prompt),
@@ -26,10 +41,10 @@ namespace TelerikBlazorApp1.Services
 
         public async Task<string> MakeAiRequest(AiConversation chat)
         {
-            OpenAIClient client = new OpenAIClient(config["OpenAiKey"], new OpenAIClientOptions());
+            OpenAIClient client = new OpenAIClient(endpoint, apiKey);
             var chatCompletionsOptions = new ChatCompletionsOptions()
             {
-                DeploymentName = "gpt-3.5-turbo", // Use DeploymentName for "model" with non-Azure clients
+                DeploymentName = deployment, // Use DeploymentName for "model" with non-Azure clients
                 Messages =
                 {
                     new ChatRequestAssistantMessage(chat.userMessage),

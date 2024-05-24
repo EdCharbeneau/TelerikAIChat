@@ -2,6 +2,8 @@
 @using TelerikBlazorApp1.Client.Services
 @inject IOpenAiService service
 @inject ConversationState state
+@inject ISpeechRecognitionService SpeechRecognition
+
 <div>
     <TelerikAIPrompt @ref="@AIPromptRef"
                      @bind-Prompt="@Prompt"
@@ -10,6 +12,7 @@
                      OnCommandExecute="@HandleCommandExecute"
                      Width="500px">
     </TelerikAIPrompt>
+    <TelerikButton>TExt</TelerikButton>
 </div>
 
 @code {
@@ -51,9 +54,17 @@
         args.Output = result;
         state.Add(new(args.Output, args.Command.Title, DateTime.UtcNow));
     }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await SpeechRecognition.InitializeModuleAsync();
+        }
+    }
 }
 
-<style>
+@* <style>
     .prompt-suggestion-item {
         cursor: pointer;
         border: 1px solid #eaeaea;
@@ -144,4 +155,4 @@
         border-left-color: rgb(255, 192, 0);
         background: rgba(255, 192, 0, 0.1);
     }
-</style>
+</style> *@
