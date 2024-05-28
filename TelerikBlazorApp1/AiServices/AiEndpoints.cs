@@ -2,11 +2,11 @@
 using TelerikBlazorApp1.Client.Services;
 using TelerikBlazorApp1.Services;
 
-namespace TelerikBlazorApp1
+namespace TelerikBlazorApp1.AiServices
 {
-    public static class ApplicationEndpoints
+    public static class AiEndpoints
     {
-        public static void MapApplicationEndpoints(this WebApplication app)
+        public static void MapAiEndpoints(this WebApplication app)
         {
             app.MapPost($"/openai", async (
                 [FromBody] string prompt,

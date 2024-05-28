@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.JSInterop;
-using TelerikBlazorApp1;
+using TelerikBlazorApp1.AiServices;
 using TelerikBlazorApp1.Client;
 using TelerikBlazorApp1.Client.Pages;
 using TelerikBlazorApp1.Client.Services;
@@ -14,9 +14,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<IOpenAiService, OpenAiService>();
-builder.Services.AddScoped<ConversationState>();
-builder.Services.AddScoped<SpeechService>();
+
+//Add services that support AI.
+builder.Services.AddAiServices();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
@@ -49,9 +49,9 @@ app.UseAntiforgery();
 app.MapRazorComponents<App>()
     //.AddInteractiveServerRenderMode()
     .AddInteractiveWebAssemblyRenderMode()
-    .AddAdditionalAssemblies(typeof(Counter).Assembly);
+    .AddAdditionalAssemblies(typeof(Home).Assembly);
 
-app.MapApplicationEndpoints();
+app.MapAiEndpoints();
 
 app.Run();
 
