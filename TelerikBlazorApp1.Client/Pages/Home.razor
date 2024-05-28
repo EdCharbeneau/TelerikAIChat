@@ -3,7 +3,7 @@
 @inject IOpenAiService service
 @inject ConversationState state
 @inject ISpeechRecognitionService SpeechRecognition
-
+@inject ITextToSpeechService TextToSpeech
 <div>
     <TelerikAIPrompt @ref="@AIPromptRef"
                      @bind-Prompt="@Prompt"
@@ -11,11 +11,67 @@
                      OnPromptRequest="@HandlePromptRequest"
                      OnCommandExecute="@HandleCommandExecute"
                      Width="500px">
+        <AIPromptViews>
+            <AIPromptPromptView ButtonText="Prompt" ButtonIcon="@SvgIcon.Comment">
+                <FooterTemplate>
+                    <TelerikButton Icon="@SvgIcon.Sparkles" OnClick="@(()=>HandlePromptRequest(new() {Prompt = Prompt}))">Generate</TelerikButton>
+                    <TelerikButton OnClick="OnRecord">
+                        <TelerikLoader Class="loader-indicator" ThemeColor="light" Size="@(ThemeConstants.Loader.Size.Small)" Visible="@isRecording"></TelerikLoader>
+                        🎙️
+                    </TelerikButton>
+                </FooterTemplate>
+            </AIPromptPromptView>
+            <AIPromptOutputView ButtonText="Responses">
+                <FooterTemplate>
+                    @if (isPlaying)
+                    {
+                        <audio autoplay controls><source src="@audio" /></audio>
+                    }
+                </FooterTemplate>
+            </AIPromptOutputView>
+        </AIPromptViews>
     </TelerikAIPrompt>
-    <TelerikButton>TExt</TelerikButton>
 </div>
 
 @code {
+    bool isRecording = false;
+    bool isPlaying = false;
+    string? audio;
+
+    public void OnRecord() =>
+        SpeechRecognition.RecognizeSpeech("en",
+        onRecognized: OnRecognized,
+        onError: OnError,
+        onStarted: OnStarted,
+        onEnded: OnEnded);
+
+    public void OnError(SpeechRecognitionErrorEvent errorEvent)
+    {
+        throw new Exception();
+    }
+    public async void OnRecognized(string text)
+    {
+        Prompt = text;
+        await HandlePromptRequest(new() { Prompt = Prompt });
+        SpeechRecognition.CancelSpeechRecognition(true);
+    }
+    public void OnEnded()
+    {
+        isRecording = false;
+        StateHasChanged();
+
+    }
+    public void OnStarted()
+    {
+        isRecording = true;
+        StateHasChanged();
+
+    }
+    public async Task OnSpeak(string textToSpeak)
+    {
+        audio = await TextToSpeech.RequestTextToSpeak(textToSpeak);
+        isPlaying = true;
+    }
     public string Prompt { get; set; } = "";
     public TelerikAIPrompt? AIPromptRef { get; set; }
     public List<AIPromptCommandDescriptor> PromptCommands { get; set; } = new List<AIPromptCommandDescriptor>()
@@ -41,9 +97,9 @@
     public async Task HandlePromptRequest(AIPromptPromptRequestEventArgs args)
     {
         string result = await service.MakeAiRequest(args.Prompt);
-        args.Output = result;
+        AIPromptRef?.AddOutput(result, "Prompt:", Prompt, Prompt, null, true);
         state.Add(new(result, args.Prompt, DateTime.UtcNow));
-
+        await OnSpeak(result);
     }
 
     public async Task HandleCommandExecute(AIPromptCommandExecuteEventArgs args)

@@ -16,6 +16,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IOpenAiService, OpenAiService>();
 builder.Services.AddScoped<ConversationState>();
+builder.Services.AddScoped<SpeechService>();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
