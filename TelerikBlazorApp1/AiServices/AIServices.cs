@@ -10,6 +10,7 @@ namespace TelerikBlazorApp1.AiServices
             services.AddScoped<IOpenAiService, OpenAiService>();
             services.AddScoped<ConversationState>();
             services.AddScoped<SpeechService>();
+            services.AddScoped<ComputerVision>();
         }
     }
 }

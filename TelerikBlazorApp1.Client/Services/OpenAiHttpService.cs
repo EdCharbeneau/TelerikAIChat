@@ -3,11 +3,8 @@ using TelerikBlazorApp1.Client;
 using TelerikBlazorApp1.Client.Services;
 
 public record AiConversation(string userMessage, string assistantMessage);
-public class OpenAiHttpService : IOpenAiService
+public class OpenAiHttpService(HttpClient httpClient) : IOpenAiService
 {
-    private readonly HttpClient httpClient;
-
-    public OpenAiHttpService(HttpClient httpClient) => this.httpClient = httpClient;
     public async Task<string> MakeAiRequest(string prompt)
     {
         var result = await httpClient.PostAsJsonAsync<string>("/openai", prompt);

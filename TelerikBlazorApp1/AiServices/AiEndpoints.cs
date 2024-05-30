@@ -36,6 +36,26 @@ namespace TelerikBlazorApp1.AiServices
                 return Results.File(audio, contentType: mimeType, fileDownloadName: "audiofile.mp3");
             });
 
+            app.MapPost("/upload", async ([FromForm] IFormFileCollection myFiles) =>
+            {
+                // Define the path to the wwwroot directory
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", myFiles[0].FileName);
+
+                // Save the file to the wwwroot directory
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await myFiles[0].CopyToAsync(stream);
+                }
+
+                return Results.Ok(new { filePath }); // Return the file path or other relevant response
+            }).Accepts<IFormFile>("multipart/form-data").DisableAntiforgery(); ;
+
+            app.MapPost($"/theme/color", async (
+                HttpContext ctx,
+                [FromBody] string imageUrl,
+                [FromServices] ComputerVision vision) =>
+                 await vision.GetColorThemeReferenceFromImageUrl(new UriBuilder() {  Host = ctx.Request.Host.Host.ToString(), Scheme = ctx.Request.Scheme, Port = ctx.Request.Host.Port ?? 0, Path = imageUrl }.Uri.ToString())
+                 );
         }
     }
 }

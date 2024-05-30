@@ -1,0 +1,26 @@
+﻿@page "/theme"
+@using TelerikBlazorApp1.Client.Services
+@inject IComputerVisionService visionService;
+
+<TelerikDropZone Id="dropzone-id">
+</TelerikDropZone>
+
+<TelerikUpload DropZoneId="dropzone-id"
+               SaveUrl="/upload"
+               MaxFileSize="@( 16 * 1024 * 1024 )"
+               OnSuccess="@OnUploadSuccess" />
+
+<p>@color</p>
+
+@code {
+    string? imgUrl;
+    string? color;
+    private async Task OnUploadSuccess(UploadSuccessEventArgs args)
+    {
+        if (args.Operation == UploadOperationType.Upload)
+        {
+            imgUrl = args.Files.First().Name;
+            string color = await visionService.RequestThemeFromImageUrl(imgUrl);
+        }
+    }
+}
