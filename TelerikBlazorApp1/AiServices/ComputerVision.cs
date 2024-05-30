@@ -16,9 +16,9 @@ namespace TelerikBlazorApp1.AiServices
                 ?? throw new MissingConfigurationException();
         }
 
-        public async Task<string> GetColorThemeReferenceFromImageUrl(string imageUrl)
+        public async Task<string> GetColorThemeReferenceFromImageUrl(Stream image)
         {
-            ImageAnalysis imageAnalysis = await AnalyzeImageUrl(Authenticate(), imageUrl);
+            ImageAnalysis imageAnalysis = await AnalyzeImageUrl(Authenticate(), image);
             return imageAnalysis.Color.AccentColor;
         }
 
@@ -31,17 +31,26 @@ namespace TelerikBlazorApp1.AiServices
             return client;
         }
 
-        private async Task<ImageAnalysis> AnalyzeImageUrl(ComputerVisionClient client, string imageUrl)
+        private async Task<ImageAnalysis> AnalyzeImageUrl(ComputerVisionClient client, Stream image)
         {
             // Creating a list that defines the features to be extracted from the image. 
             List<VisualFeatureTypes?> features = new List<VisualFeatureTypes?>()
                             {
-                                VisualFeatureTypes.Color
+                                VisualFeatureTypes.Tags
                             };
-            ImageAnalysis results = await client.AnalyzeImageAsync(imageUrl, visualFeatures: features);
+            try
+            {
+
+            ImageAnalysis results = await client.AnalyzeImageInStreamAsync(image, visualFeatures: features);
+                return results;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
 
             // Analyze the URL image 
-            return results;
+
         }
 
     }
