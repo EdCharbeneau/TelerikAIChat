@@ -10,46 +10,33 @@ namespace TelerikBlazorApp1.AiServices
         private readonly string endpoint;
         public ComputerVision(IConfiguration config)
         {
-            key = config["VisionApiKey"]
-    ?? throw new MissingConfigurationException();
-            endpoint = config["VisionEndpoint"]
-                ?? throw new MissingConfigurationException();
+            key = config["VisionApiKey"] ?? throw new MissingConfigurationException();
+            endpoint = config["VisionEndpoint"] ?? throw new MissingConfigurationException();
         }
 
         public async Task<string> GetColorThemeReferenceFromImageUrl(Stream image)
         {
-            ImageAnalysis imageAnalysis = await AnalyzeImageUrl(Authenticate(), image);
-            return imageAnalysis.Color.AccentColor;
-        }
-
-
-        private ComputerVisionClient Authenticate()
-        {
             ComputerVisionClient client =
-              new ComputerVisionClient(new ApiKeyServiceClientCredentials(key))
-              { Endpoint = endpoint };
-            return client;
-        }
+  new ComputerVisionClient(
+      new ApiKeyServiceClientCredentials(key))
+  { Endpoint = endpoint };
 
-        private async Task<ImageAnalysis> AnalyzeImageUrl(ComputerVisionClient client, Stream image)
-        {
-            // Creating a list that defines the features to be extracted from the image. 
+            string temp = "https://moderatorsampleimages.blob.core.windows.net/samples/sample16.png";
+
             List<VisualFeatureTypes?> features = new List<VisualFeatureTypes?>()
                             {
-                                VisualFeatureTypes.Tags
+                                VisualFeatureTypes.Color
                             };
             try
             {
 
-            ImageAnalysis results = await client.AnalyzeImageInStreamAsync(image, visualFeatures: features);
-                return results;
+                ImageAnalysis results = await client.AnalyzeImageInStreamAsync(image, visualFeatures: features);
+                return results.Color.AccentColor;
             }
             catch (Exception ex)
             {
                 throw;
             }
-
-            // Analyze the URL image 
 
         }
 

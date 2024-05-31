@@ -8,9 +8,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TelerikBlazorApp1.Client", "TelerikBlazorApp1.Client\TelerikBlazorApp1.Client.csproj", "{A1B0A0C3-F73A-42E8-ADBA-F1BCC1B6B4B7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{10D47D7D-1E99-4F1F-B774-A105E4A713F5}"
-	ProjectSection(SolutionItems) = preProject
-		readme.md = readme.md
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

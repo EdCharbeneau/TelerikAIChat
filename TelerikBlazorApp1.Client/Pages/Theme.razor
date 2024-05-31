@@ -1,4 +1,4 @@
-﻿@page "/theme"
+﻿@page "/"
 @using TelerikBlazorApp1.Client.Services
 @inject IComputerVisionService visionService;
 
@@ -15,12 +15,13 @@
 @code {
     string? imgUrl;
     string? color;
-    private async Task OnUploadSuccess(UploadSuccessEventArgs args)
+    private void OnUploadSuccess(UploadSuccessEventArgs args)
     {
         if (args.Operation == UploadOperationType.Upload)
         {
+            color = args.Request.ResponseText;
             imgUrl = args.Files.First().Name;
-            string color = await visionService.RequestThemeFromImageUrl(imgUrl);
+            //color = await visionService.RequestThemeFromImageUrl(imgUrl);
         }
     }
 }

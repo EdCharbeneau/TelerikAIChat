@@ -40,19 +40,16 @@ namespace TelerikBlazorApp1.AiServices
             app.MapPost("/upload", async ([FromForm] IFormFileCollection myFiles,
                 [FromServices] ComputerVision vision) =>
             {
-            // Define the path to the wwwroot directory
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", myFiles[0].FileName);
+                // Define the path to the wwwroot directory
 
-            // Save the file to the wwwroot directory
-            using (var stream = new FileStream(filePath, FileMode.Create))
-            {
-                await myFiles[0].CopyToAsync(stream);
-            }
-            using Stream targetStream = new MemoryStream();
-            await myFiles[0].CopyToAsync(targetStream);
+                // Save the file to the wwwroot directory
+                using (var stream = new MemoryStream())
+                {
+                    await myFiles[0].CopyToAsync(stream);
+                    var result = await vision.GetColorThemeReferenceFromImageUrl(stream);
+                    return Results.Ok(new { result }); 
+                }
 
-            var result = await vision.GetColorThemeReferenceFromImageUrl(targetStream);
-                return Results.Ok(new { filePath }); // Return the file path or other relevant response
             }).Accepts<IFormFile>("multipart/form-data").DisableAntiforgery(); ;
 
         }
