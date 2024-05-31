@@ -40,9 +40,6 @@ namespace TelerikBlazorApp1.AiServices
             app.MapPost("/upload", async ([FromForm] IFormFileCollection myFiles,
                 [FromServices] ComputerVision vision) =>
             {
-                // Define the path to the wwwroot directory
-
-                // Save the file to the wwwroot directory
                 using (var stream = new MemoryStream())
                 {
                     await myFiles[0].CopyToAsync(stream);
