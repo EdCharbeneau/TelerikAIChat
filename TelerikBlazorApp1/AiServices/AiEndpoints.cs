@@ -40,14 +40,20 @@ namespace TelerikBlazorApp1.AiServices
             app.MapPost("/upload", async ([FromForm] IFormFileCollection myFiles,
                 [FromServices] ComputerVision vision) =>
             {
-                using (var stream = new MemoryStream())
-                {
-                    await myFiles[0].CopyToAsync(stream);
-                    var result = await vision.GetColorThemeReferenceFromImageUrl(stream);
-                    return Results.Ok(new { result }); 
-                }
+                // Holds pixel data from file.
+                byte[]? imgBytes = null;
 
-            }).Accepts<IFormFile>("multipart/form-data").DisableAntiforgery(); ;
+                // Fully flush out the uploaded file Stream into a MemoryStream then copy into the byte[]
+                using var ms = new MemoryStream();
+                await myFiles[0].CopyToAsync(ms);
+                imgBytes = ms.ToArray();
+
+                // Use the image data to Azure functionality
+                var result = await vision.GetColorThemeReferenceFromImageUrl(imgBytes);
+
+                return Results.Ok(new { result });
+
+            }).Accepts<IFormFile>("multipart/form-data").DisableAntiforgery();
 
         }
     }

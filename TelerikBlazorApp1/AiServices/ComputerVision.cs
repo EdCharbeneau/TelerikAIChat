@@ -8,29 +8,30 @@ namespace TelerikBlazorApp1.AiServices
     {
         private readonly string key;
         private readonly string endpoint;
+
         public ComputerVision(IConfiguration config)
         {
             key = config["VisionApiKey"] ?? throw new MissingConfigurationException();
             endpoint = config["VisionEndpoint"] ?? throw new MissingConfigurationException();
         }
 
-        public async Task<string> GetColorThemeReferenceFromImageUrl(Stream image)
+        public async Task<string> GetColorThemeReferenceFromImageUrl(byte[]? imageData)
         {
-            ComputerVisionClient client =
-  new ComputerVisionClient(
-      new ApiKeyServiceClientCredentials(key))
-  { Endpoint = endpoint };
+            if (imageData == null || imageData.Length == 0)
+            {
+                throw new ArgumentNullException(nameof(imageData), "The image data is null or empty, it cannot be used for Azure request.");
+            }
 
-            string temp = "https://moderatorsampleimages.blob.core.windows.net/samples/sample16.png";
+            var client = new ComputerVisionClient(new ApiKeyServiceClientCredentials(key)) { Endpoint = endpoint };
 
-            List<VisualFeatureTypes?> features = new List<VisualFeatureTypes?>()
-                            {
-                                VisualFeatureTypes.Color
-                            };
+            var features = new List<VisualFeatureTypes?> { VisualFeatureTypes.Color };
+
             try
             {
+                var results = await client.AnalyzeImageInStreamAsync(
+                    image: new MemoryStream(imageData),
+                    visualFeatures: features);
 
-                ImageAnalysis results = await client.AnalyzeImageInStreamAsync(image, visualFeatures: features);
                 return results.Color.AccentColor;
             }
             catch (Exception ex)
