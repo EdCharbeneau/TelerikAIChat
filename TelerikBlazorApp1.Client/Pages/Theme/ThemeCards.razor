@@ -1,0 +1,82 @@
+﻿@page "/"
+@using System.Text.Json
+@using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
+@using TelerikBlazorApp1.Client.Services
+<CardListView Data="Data"/>
+<TelerikDropZone Id="dropzone-id">
+</TelerikDropZone>
+
+<TelerikUpload DropZoneId="dropzone-id"
+               SaveUrl="/upload"
+               MaxFileSize="@( 16 * 1024 * 1024 )"
+               OnSuccess="@OnUploadSuccess" />
+
+<p>@color?.AccentColor</p>
+<p>@color?.IsBWImg</p>
+@color
+@imgUrl
+@code {
+    public List<CardItem> Data { get; set; } = new List<CardItem>()
+    {
+        new ()
+                    {
+                        Title = "Traditions",
+                        SubTitle = "Bulgaria, Europe",
+                        ImageUrl = "kukeri.jpg",
+                        Likes = 674,
+                        IsLiked = true,
+                        AccentColor = "#2F709C"
+                    },
+                    new ()
+                    {
+                        Title = "Mountains",
+                        SubTitle = "Bulgaria, Europe",
+                        ImageUrl = "rila_lakes.jpg",
+                        Likes = 891,
+                        AccentColor = "#1D6DAE"
+                    },
+                           new()             {
+                        Title = "Baloons",
+                        SubTitle = "Bulgaria, Europe",
+                        ImageUrl = "1.jpg",
+                        Likes = 674,
+                        IsLiked = true,
+                        AccentColor = "#AB9220"
+                    },
+                    new ()
+                    {
+                        Title = "Forest",
+                        SubTitle = "Bulgaria, Europe",
+                        ImageUrl = "2.jpg",
+                        Likes = 891,
+                        AccentColor = "#4B6423"
+                    },
+                    new ()
+                    {
+                        Title = "Forest",
+                        SubTitle = "Bulgaria, Europe",
+                        ImageUrl = "6.jpg",
+                        Likes = 891,
+                        AccentColor = "#195EB2"
+                    },
+                    new ()
+                    {
+                        Title = "Forest",
+                        SubTitle = "Bulgaria, Europe",
+                        ImageUrl = "7.jpg",
+                        Likes = 891,
+                        AccentColor = "#AF3C1C"
+                    },
+
+            };
+    string? imgUrl;
+    ColorInfo? color;
+    private void OnUploadSuccess(UploadSuccessEventArgs args)
+    {
+        if (args.Operation == UploadOperationType.Upload)
+        {
+            color = JsonSerializer.Deserialize<ColorInfo>(args.Request.ResponseText);
+            imgUrl = args.Request.ResponseText;
+        }
+    }
+}

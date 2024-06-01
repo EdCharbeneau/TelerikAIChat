@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
 using System.IO;
 using TelerikBlazorApp1.Client.Services;
 using TelerikBlazorApp1.Services;
@@ -49,7 +50,7 @@ namespace TelerikBlazorApp1.AiServices
                 imgBytes = ms.ToArray();
 
                 // Use the image data to Azure functionality
-                var result = await vision.GetColorThemeReferenceFromImageUrl(imgBytes);
+                ColorInfo result = await vision.GetColorThemeReferenceFromImageUrl(imgBytes);
 
                 return Results.Ok(new { result });
 

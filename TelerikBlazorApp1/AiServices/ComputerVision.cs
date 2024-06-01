@@ -15,7 +15,7 @@ namespace TelerikBlazorApp1.AiServices
             endpoint = config["VisionEndpoint"] ?? throw new MissingConfigurationException();
         }
 
-        public async Task<string> GetColorThemeReferenceFromImageUrl(byte[]? imageData)
+        public async Task<ColorInfo> GetColorThemeReferenceFromImageUrl(byte[]? imageData)
         {
             if (imageData == null || imageData.Length == 0)
             {
@@ -32,7 +32,7 @@ namespace TelerikBlazorApp1.AiServices
                     image: new MemoryStream(imageData),
                     visualFeatures: features);
 
-                return results.Color.AccentColor;
+                return results.Color;
             }
             catch (Exception ex)
             {
