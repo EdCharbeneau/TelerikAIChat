@@ -1,45 +1,41 @@
 ﻿@using BlazorComponentUtilities
 
-<div class="k-card-deck card-demo">
-    @foreach (var item in Data)
-    {
-        <div style="@CreateTheme(item.AccentColor)">
-            <TelerikCard Width="250px">
-                <CardHeader>
-                    <CardTitle>@item.Title</CardTitle>
-                </CardHeader>
-                <CardImage Src="@($"/{item.ImageUrl}")"></CardImage>
-                <CardBody>
-                    <p><TelerikChipList Data="item.Description.ToDictionary(x=>x)" TextField="Value"  ></TelerikChipList></p>
-                        <TelerikColorPalette Colors="@Palette"/>
-                </CardBody>
-                <CardActions>
-                    <TelerikButton ThemeColor="@(ThemeConstants.Button.ThemeColor.Primary)">Save for later</TelerikButton>
-                    @if (item.IsLiked)
-                    {
-                      <TelerikButton ThemeColor="@(ThemeConstants.Button.ThemeColor.Primary)"
-                       Icon="@SvgIcon.Heart"
-                       FillMode="@(ThemeConstants.Button.FillMode.Flat)"
-                       OnClick="@(()=>OnDislikedClicked(item))"
+@foreach (var item in Data)
+{
+    <div style="@CreateTheme(item.AccentColor)">
+        <TelerikCard Width="250px">
+            <CardHeader>
+                <CardTitle>@item.Title</CardTitle>
+            </CardHeader>
+            <CardImage Src="@($"/{item.ImageUrl}")"></CardImage>
+            <CardBody>
+                <p><TelerikChipList Data="item.Description.ToDictionary(x=>x)" TextField="Value"></TelerikChipList></p>
+                <TelerikColorPalette Colors="@Palette" />
+            </CardBody>
+            <CardActions>
+                <TelerikButton ThemeColor="@(ThemeConstants.Button.ThemeColor.Primary)">Save for later</TelerikButton>
+                @if (item.IsLiked)
+                {
+                    <TelerikButton ThemeColor="@(ThemeConstants.Button.ThemeColor.Primary)"
+                                   Icon="@SvgIcon.Heart"
+                                   FillMode="@(ThemeConstants.Button.FillMode.Flat)"
+                                   OnClick="@(()=>OnDislikedClicked(item))">
+                    </TelerikButton>
+                }
+                else
+                {
+                    <TelerikButton ThemeColor="@(ThemeConstants.Button.ThemeColor.Primary)"
+                                   Icon="@SvgIcon.HeartOutline"
+                                   FillMode="@(ThemeConstants.Button.FillMode.Flat)"
+                                   OnClick="@(()=>OnLikedClicked(item))">
+                    </TelerikButton>
 
-                      >
-                      </TelerikButton>
-                    } else
-                    {
-                       <TelerikButton ThemeColor="@(ThemeConstants.Button.ThemeColor.Primary)"
-                        Icon="@SvgIcon.HeartOutline"
-                        FillMode="@(ThemeConstants.Button.FillMode.Flat)"
-                       OnClick="@(()=>OnLikedClicked(item))"
-                       >
-                       </TelerikButton>
-
-                    }
-                    <span class="post-likes-count">Likes @item.Likes</span>
-                    </CardActions>
-                </TelerikCard>
-            </div>
-                    }
+                }
+                <span class="post-likes-count">Likes @item.Likes</span>
+            </CardActions>
+        </TelerikCard>
     </div>
+}
 
 @code {
     [Parameter]
@@ -54,14 +50,14 @@
     void OnLikedClicked(CardItem item)
     {
         OnLiked.InvokeAsync(item);
-    } 
+    }
 
-        void OnDislikedClicked(CardItem item)
+    void OnDislikedClicked(CardItem item)
     {
         OnDisliked.InvokeAsync(item);
-    } 
+    }
     public string[] Palette =
-        {
+    {
         "var(--kendo-color-primary-subtle)",
         "var(--kendo-color-primary-subtle-active)",
         "var(--kendo-color-primary)",
@@ -69,13 +65,14 @@
         "var(--kendo-color-primary-active)",
     };
 
+
     private StyleBuilder CreateTheme(string accentColor) => StyleBuilder.Empty()
-    .AddStyle("--kendo-color-primary", accentColor)
-    .AddStyle(ThemeSettings());
+        .AddStyle("--kendo-color-primary", accentColor)
+        .AddStyle(ThemeSettings());
 
     private StyleBuilder ThemeSettings() => StyleBuilder.Empty()
         .AddStyle("--kendo-color-primary-subtle", "color-mix(in srgb, var(--kendo-color-primary), white 75%)")
-            .AddStyle("--kendo-color-primary-subtle-hover", "color-mix(in srgb, var(--kendo-color-primary), white 75%)")
+            .AddStyle("--kendo-color-primary-subtle-hover", "color-mix(in srgb, var(--kendo-color-primary), white 50%)")
             .AddStyle("--kendo-color-primary-subtle-active", "color-mix(in srgb, var(--kendo-color-primary), white)")
             .AddStyle("--kendo-color-primary-hover", "color-mix(in srgb, var(--kendo-color-primary), black)")
             .AddStyle("--kendo-color-primary-active", "color-mix(in srgb, var(--kendo-color-primary), black 75%)")
@@ -87,22 +84,5 @@
             .AddStyle("--kendo-card-subtitle-text", "var(--kendo-color-on-primary)")
             .AddStyle("--kendo-card-border", "var(--kendo-color-primary)")
             ;
-    }
-
-    <style>
-       .card-demo .k-card-header {
-            background-color: var(--kendo-color-primary);
-        }
-
-       .card-demo .k-card {
-            border-color: var(--kendo-card-border);
-        }
-
-       .card-demo .k-card-title {
-            color: var(--kendo-card-header-text);
-        }
-
-        .card-demo .k-card-subtitle {
-            color: var(--kendo-card-header-text);
-        }
-    </style>
+}
+    

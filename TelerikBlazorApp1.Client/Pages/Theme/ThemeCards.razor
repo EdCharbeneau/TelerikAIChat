@@ -1,26 +1,36 @@
-﻿@page "/"
+﻿@page "/theme"
 @using System.Text.Json
 @using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
 @inject Blazored.LocalStorage.ILocalStorageService localStorage
 
-<CardListView Data="Data" OnDisliked="OnDisliked" OnLiked="OnLiked" />
+<div class="pin-layout">
 
-@if(isLoading)
-{
-    <Component/>
-}
+    <CardListView Data="Data" OnDisliked="OnDisliked" OnLiked="OnLiked" />
 
-<TelerikDropZone Id="dropzone-id">
-</TelerikDropZone>
+    @if (isLoading)
+    {
+        <CardSkeleton />
+    }
 
-<TelerikUpload DropZoneId="dropzone-id"
-                OnUpload="OnUpload"
-                OnError="@(()=> isLoading = false)"
-               SaveUrl="/upload"
-               MaxFileSize="@( 16 * 1024 * 1024 )"
-               OnSuccess="@OnUploadSuccess" />
-               
-<TelerikButton OnClick="ClearData">Clear Data</TelerikButton>
+    <TelerikCard Width="calc(500px + 1em)">
+        <CardBody>
+            <TelerikDropZone Id="dropzone-id">
+            </TelerikDropZone>
+
+            <TelerikUpload DropZoneId="dropzone-id"
+                           OnUpload="OnUpload"
+                           OnError="@(()=> isLoading = false)"
+                           SaveUrl="/upload"
+                           MaxFileSize="@( 16 * 1024 * 1024 )"
+                           OnSuccess="@OnUploadSuccess" />
+        </CardBody>
+        <CardActions>
+            <TelerikButton OnClick="ClearData">Clear Data</TelerikButton>
+        </CardActions>
+    </TelerikCard>
+
+</div>
+
 
 @code {
     bool isLoading;
@@ -64,7 +74,7 @@
                     {
                         AccentColor = $"#{analysis.Color.AccentColor}",
                         ImageUrl = args.Files[0].Name,
-                        Title = CapitalizeFirstLetter(analysis.Description.Captions[0].Text  + '.'),
+                        Title = CapitalizeFirstLetter(analysis.Description.Captions[0].Text + '.'),
                         Description = analysis.Description.Tags.ToArray()
                     });
                 await localStorage.SetItemAsync("cardCache", Data);

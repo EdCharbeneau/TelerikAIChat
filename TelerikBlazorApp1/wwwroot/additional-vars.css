@@ -1,0 +1,56 @@
+﻿:root {
+    --kendo-card-header-text: #fff;
+}
+.pin-layout {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: 100vh;
+    gap: 1em;
+}
+
+.k-card {
+    border-color: var(--kendo-card-border);
+}
+
+.k-card-header {
+    background-color: var(--kendo-color-primary);
+}
+
+.k-card-title {
+    color: var(--kendo-card-header-text);
+}
+
+.k-card-subtitle {
+    color: var(--kendo-card-header-text);
+}
+.rainbow .k-skeleton-pulse .k-skeleton, .k-skeleton-pulse .k-placeholder-line, .k-skeleton-pulse.k-skeleton, .k-skeleton-pulse.k-placeholder-line {
+    animation: k-skeleton-pulse-rainbow 1.5s ease-in-out .5s infinite;
+}
+@keyframes k-skeleton-pulse-rainbow {
+    0% {
+        background: #33CCCC;
+    }
+
+    20% {
+        background: #33CC36;
+    }
+
+    40% {
+        background: #B8CC33;
+    }
+
+    60% {
+        background: #FCCA00;
+    }
+
+    80% {
+        background: #33CC36;
+    }
+
+    100% {
+        background: #33CCCC;
+    }
+
+}
