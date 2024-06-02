@@ -1,82 +1,76 @@
 ﻿@page "/"
 @using System.Text.Json
 @using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
-@using TelerikBlazorApp1.Client.Services
-<CardListView Data="Data"/>
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
+
+<CardListView Data="Data" OnDisliked="OnDisliked" OnLiked="OnLiked" />
+
+@if(isLoading)
+{
+    <Component/>
+}
+
 <TelerikDropZone Id="dropzone-id">
 </TelerikDropZone>
 
 <TelerikUpload DropZoneId="dropzone-id"
+                OnUpload="OnUpload"
+                OnError="@(()=> isLoading = false)"
                SaveUrl="/upload"
                MaxFileSize="@( 16 * 1024 * 1024 )"
                OnSuccess="@OnUploadSuccess" />
+               
+<TelerikButton OnClick="ClearData">Clear Data</TelerikButton>
 
-<p>@color?.AccentColor</p>
-<p>@color?.IsBWImg</p>
-@color
-@imgUrl
 @code {
-    public List<CardItem> Data { get; set; } = new List<CardItem>()
-    {
-        new ()
-                    {
-                        Title = "Traditions",
-                        SubTitle = "Bulgaria, Europe",
-                        ImageUrl = "kukeri.jpg",
-                        Likes = 674,
-                        IsLiked = true,
-                        AccentColor = "#2F709C"
-                    },
-                    new ()
-                    {
-                        Title = "Mountains",
-                        SubTitle = "Bulgaria, Europe",
-                        ImageUrl = "rila_lakes.jpg",
-                        Likes = 891,
-                        AccentColor = "#1D6DAE"
-                    },
-                           new()             {
-                        Title = "Baloons",
-                        SubTitle = "Bulgaria, Europe",
-                        ImageUrl = "1.jpg",
-                        Likes = 674,
-                        IsLiked = true,
-                        AccentColor = "#AB9220"
-                    },
-                    new ()
-                    {
-                        Title = "Forest",
-                        SubTitle = "Bulgaria, Europe",
-                        ImageUrl = "2.jpg",
-                        Likes = 891,
-                        AccentColor = "#4B6423"
-                    },
-                    new ()
-                    {
-                        Title = "Forest",
-                        SubTitle = "Bulgaria, Europe",
-                        ImageUrl = "6.jpg",
-                        Likes = 891,
-                        AccentColor = "#195EB2"
-                    },
-                    new ()
-                    {
-                        Title = "Forest",
-                        SubTitle = "Bulgaria, Europe",
-                        ImageUrl = "7.jpg",
-                        Likes = 891,
-                        AccentColor = "#AF3C1C"
-                    },
+    bool isLoading;
+    public List<CardItem> Data { get; set; } = [];
+    string? responseText;
 
-            };
-    string? imgUrl;
-    ColorInfo? color;
-    private void OnUploadSuccess(UploadSuccessEventArgs args)
+    public void OnUpload() => isLoading = true;
+
+    protected override async Task OnInitializedAsync()
     {
+        Data = await localStorage.GetItemAsync<List<CardItem>>("cardCache") ?? [];
+    }
+
+    private async Task ClearData()
+    {
+        await localStorage.ClearAsync();
+        Data = [];
+    }
+
+    private void OnLiked(CardItem item)
+    {
+        item.IsLiked = true;
+        item.Likes++;
+    }
+
+    private void OnDisliked(CardItem item)
+    {
+        item.IsLiked = false;
+        item.Likes--;
+    }
+
+    private async Task OnUploadSuccess(UploadSuccessEventArgs args)
+    {
+        string CapitalizeFirstLetter(string text) => text.ToUpper()[0] + text[1..];
         if (args.Operation == UploadOperationType.Upload)
         {
-            color = JsonSerializer.Deserialize<ColorInfo>(args.Request.ResponseText);
-            imgUrl = args.Request.ResponseText;
+            ImageAnalysis? analysis = JsonSerializer.Deserialize<ImageAnalysis>(args.Request.ResponseText, new JsonSerializerOptions(JsonSerializerDefaults.Web));
+            if (analysis is not null)
+            {
+                Data.Add(new()
+                    {
+                        AccentColor = $"#{analysis.Color.AccentColor}",
+                        ImageUrl = args.Files[0].Name,
+                        Title = CapitalizeFirstLetter(analysis.Description.Captions[0].Text  + '.'),
+                        Description = analysis.Description.Tags.ToArray()
+                    });
+                await localStorage.SetItemAsync("cardCache", Data);
+            }
+
         }
+        isLoading = false;
     }
 }

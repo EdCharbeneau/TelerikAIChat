@@ -1,3 +1,4 @@
+using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using TelerikBlazorApp1.Client.Services;
 
@@ -8,6 +9,7 @@ builder.Services.AddScoped<IOpenAiService, OpenAiHttpService>();
 builder.Services.AddScoped<ConversationState>();
 builder.Services.AddScoped<ITextToSpeechService, TextToSpeechService>();
 builder.Services.AddSpeechRecognitionServices();
+builder.Services.AddBlazoredLocalStorageAsSingleton();
 
 builder.Services.AddTelerikBlazor();
 

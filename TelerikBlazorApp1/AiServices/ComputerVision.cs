@@ -1,6 +1,7 @@
 ﻿using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
 using Microsoft.Azure.CognitiveServices.Vision.ComputerVision;
 using TelerikBlazorApp1.Services;
+using TelerikBlazorApp1.Client.Pages.Theme;
 
 namespace TelerikBlazorApp1.AiServices
 {
@@ -15,7 +16,7 @@ namespace TelerikBlazorApp1.AiServices
             endpoint = config["VisionEndpoint"] ?? throw new MissingConfigurationException();
         }
 
-        public async Task<ColorInfo> GetColorThemeReferenceFromImageUrl(byte[]? imageData)
+        public async Task<ImageAnalysis> GetColorThemeReferenceFromImageUrl(byte[]? imageData)
         {
             if (imageData == null || imageData.Length == 0)
             {
@@ -24,7 +25,10 @@ namespace TelerikBlazorApp1.AiServices
 
             var client = new ComputerVisionClient(new ApiKeyServiceClientCredentials(key)) { Endpoint = endpoint };
 
-            var features = new List<VisualFeatureTypes?> { VisualFeatureTypes.Color };
+            var features = new List<VisualFeatureTypes?> { 
+                VisualFeatureTypes.Color,
+                VisualFeatureTypes.Description
+            };
 
             try
             {
@@ -32,7 +36,7 @@ namespace TelerikBlazorApp1.AiServices
                     image: new MemoryStream(imageData),
                     visualFeatures: features);
 
-                return results.Color;
+                return results;
             }
             catch (Exception ex)
             {
