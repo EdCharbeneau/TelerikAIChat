@@ -6,10 +6,11 @@
 
 ## OpenAI Keys
 
-Note: The demo currently shows how to use OpenAI. Azure OpenAI can also be used with modification. However, Azure OpenAI is in beta and requires special access.
+Note: The demo currently shows how to use Azure OpenAI. Other AI models can also be used with modification.
 
-https://platform.openai.com/account/billing/overview
-
+- Azure OpenAI: https://azure.microsoft.com/en-us/products/ai-services/openai-service/
+- Azure AI Vision: https://azure.microsoft.com/en-us/products/ai-services/ai-vision/
+- Azure Speech: https://azure.microsoft.com/en-us/products/ai-services/ai-speech/
 
 ## Telerik UI for Blazor
 
@@ -21,6 +22,15 @@ Note the items marked `For Trial licenses, use` in the documentation. These item
 
 ## User Secrets Schema
 
+
 {
-  "OpenAiKey": "your key here"
+  // Use User Secrets or Environment Variables to set the values below
+  // Do not share your API keys
+  "ApiKey": "Your Azure OpenAI key",
+  "DeploymentName": "Your Deployment Name",
+  "Endpoint": "Your Azure OpenAI Endpoint",
+  "SpeechApiKey": "Your Azure Cognitive Services Key",
+  "ServiceRegion": "Your Service Region",
+  "VisionApiKey": "Your Vision Key",
+  "VisionEndpoint": "Your Vision Endpoint"
 }
