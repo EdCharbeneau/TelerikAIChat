@@ -54,3 +54,12 @@
     }
 
 }
+
+.k-appbar .nav-link {
+    color: var(--kendo-card-header-text);
+    border-radius: 5px;
+    margin: 0 .5rem;
+}
+    .k-appbar .nav-link.active {
+        background-color: rgba(0,0,0, .5)
+    }

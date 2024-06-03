@@ -12,9 +12,9 @@
         <AIPromptViews>
             <AIPromptPromptView ButtonText="Prompt" ButtonIcon="@SvgIcon.Comment">
                 <FooterTemplate>
-                    <TelerikButton Icon="@SvgIcon.Sparkles" OnClick="@(()=>HandlePromptRequest(new() {Prompt = prompt}))">Generate</TelerikButton>
-                    <TelerikButton OnClick="OnRecord">
-                        <TelerikLoader Class="loader-indicator" ThemeColor="light" Size="@(ThemeConstants.Loader.Size.Small)" Visible="@isRecording"></TelerikLoader>
+                    <TelerikButton ThemeColor="@(ThemeConstants.Button.ThemeColor.Primary)" Icon="@SvgIcon.Sparkles" OnClick="@(()=>HandlePromptRequest(new() {Prompt = prompt}))">Generate</TelerikButton>
+                    <TelerikButton OnClick="OnRecord" >
+                        <TelerikLoader Class="loader-indicator" Size="@(ThemeConstants.Loader.Size.Small)" Visible="@isRecording"></TelerikLoader>
                         🎙️
                     </TelerikButton>
                 </FooterTemplate>

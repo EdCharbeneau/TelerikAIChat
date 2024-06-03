@@ -2,10 +2,11 @@
 @using System.Text.Json
 @using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
 @inject Blazored.LocalStorage.ILocalStorageService localStorage
+@inject ThemeState ThemeState
 
 <div class="pin-layout">
 
-    <CardListView Data="Data" OnDisliked="OnDisliked" OnLiked="OnLiked" />
+    <CardListView Data="Data" OnDisliked="OnDisliked" OnLiked="OnLiked" OnSetAsTheme="OnSetAsTheme"/>
 
     @if (isLoading)
     {
@@ -49,6 +50,8 @@
         await localStorage.ClearAsync();
         Data = [];
     }
+
+    private void OnSetAsTheme(CardItem item) => ThemeState.SetThemeColor(item.AccentColor);
 
     private void OnLiked(CardItem item)
     {

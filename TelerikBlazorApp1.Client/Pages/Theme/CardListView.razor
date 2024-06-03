@@ -2,7 +2,7 @@
 
 @foreach (var item in Data)
 {
-    <div style="@CreateTheme(item.AccentColor)">
+    <div style="@ThemeState.CreateTheme(item.AccentColor)">
         <TelerikCard Width="250px">
             <CardHeader>
                 <CardTitle>@item.Title</CardTitle>
@@ -13,7 +13,7 @@
                 <TelerikColorPalette Colors="@Palette" />
             </CardBody>
             <CardActions>
-                <TelerikButton ThemeColor="@(ThemeConstants.Button.ThemeColor.Primary)">Save for later</TelerikButton>
+                <TelerikButton ThemeColor="@(ThemeConstants.Button.ThemeColor.Primary)" OnClick="@(()=> OnSetAsThemeClicked(item))">Set as theme</TelerikButton>
                 @if (item.IsLiked)
                 {
                     <TelerikButton ThemeColor="@(ThemeConstants.Button.ThemeColor.Primary)"
@@ -47,15 +47,15 @@
     [Parameter]
     public EventCallback<CardItem> OnDisliked { get; set; }
 
-    void OnLikedClicked(CardItem item)
-    {
-        OnLiked.InvokeAsync(item);
-    }
+    [Parameter]
+    public EventCallback<CardItem> OnSetAsTheme { get; set; }
 
-    void OnDislikedClicked(CardItem item)
-    {
-        OnDisliked.InvokeAsync(item);
-    }
+    void OnLikedClicked(CardItem item) => OnLiked.InvokeAsync(item);
+
+    void OnDislikedClicked(CardItem item) => OnDisliked.InvokeAsync(item);
+
+    void OnSetAsThemeClicked(CardItem item) => OnSetAsTheme.InvokeAsync(item);
+    
     public string[] Palette =
     {
         "var(--kendo-color-primary-subtle)",
@@ -65,24 +65,5 @@
         "var(--kendo-color-primary-active)",
     };
 
-
-    private StyleBuilder CreateTheme(string accentColor) => StyleBuilder.Empty()
-        .AddStyle("--kendo-color-primary", accentColor)
-        .AddStyle(ThemeSettings());
-
-    private StyleBuilder ThemeSettings() => StyleBuilder.Empty()
-        .AddStyle("--kendo-color-primary-subtle", "color-mix(in srgb, var(--kendo-color-primary), white 75%)")
-            .AddStyle("--kendo-color-primary-subtle-hover", "color-mix(in srgb, var(--kendo-color-primary), white 50%)")
-            .AddStyle("--kendo-color-primary-subtle-active", "color-mix(in srgb, var(--kendo-color-primary), white)")
-            .AddStyle("--kendo-color-primary-hover", "color-mix(in srgb, var(--kendo-color-primary), black)")
-            .AddStyle("--kendo-color-primary-active", "color-mix(in srgb, var(--kendo-color-primary), black 75%)")
-            .AddStyle("--kendo-color-primary-emphasis", "color-mix(in srgb, var(--kendo-color-primary), white)")
-            .AddStyle("--kendo-color-primary-on-subtle", " color-mix(in srgb, var(--kendo-color-primary), white)")
-            .AddStyle("--kendo-color-on-primary", "#ffffff")
-            .AddStyle("--kendo-color-primary-on-surface", "color-mix(in srgb, var(--kendo-color-primary), white)")
-            .AddStyle("--kendo-card-header-text", "var(--kendo-color-on-primary)")
-            .AddStyle("--kendo-card-subtitle-text", "var(--kendo-color-on-primary)")
-            .AddStyle("--kendo-card-border", "var(--kendo-color-primary)")
-            ;
 }
     

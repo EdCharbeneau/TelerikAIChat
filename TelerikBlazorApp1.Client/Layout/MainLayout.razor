@@ -1,15 +1,22 @@
 ﻿@inherits LayoutComponentBase
-
+@inject ThemeState ThemeState
 <TelerikRootComponent>
-    <div class="page">
-        <div class="sidebar">
-            <NavMenu />
-        </div>
-
+    <div class="page" style="@ThemeState.CreateTheme(ThemeState.ThemeColor)">
         <main>
-            <div class="top-row px-4">
-                <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
-            </div>
+            <TelerikAppBar>
+                <AppBarSection>
+                         <h1>Telerik UI for Blazor</h1>
+                </AppBarSection>
+                   <AppBarSpacer />
+                <AppBarSection>
+                        <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                            <TelerikSvgIcon Icon="@SvgIcon.Sparkles"/> AI Prompt
+                        </NavLink>
+                        <NavLink class="nav-link" href="/theme" >
+                            <TelerikSvgIcon Icon="@SvgIcon.ImageAdd" /> Dynamic Theme
+                        </NavLink>
+                </AppBarSection>
+            </TelerikAppBar>
 
             <article class="content px-4">
                 @Body
@@ -23,3 +30,11 @@
         <a class="dismiss">🗙</a>
     </div>
 </TelerikRootComponent>
+
+@code {
+    protected override Task OnInitializedAsync()
+    {
+        ThemeState.OnChange += StateHasChanged;
+        return base.OnInitializedAsync();
+    }
+}
