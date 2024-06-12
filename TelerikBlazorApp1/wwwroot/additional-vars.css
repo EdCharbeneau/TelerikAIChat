@@ -6,7 +6,6 @@
     flex-flow: row wrap;
     justify-content: flex-start;
     align-items: flex-start;
-    height: 100vh;
     gap: 1em;
 }
 
