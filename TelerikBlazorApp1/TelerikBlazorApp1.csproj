@@ -17,7 +17,7 @@
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.2" />
 		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Azure.CognitiveServices.Vision.ComputerVision" Version="7.0.1" />
-		<PackageReference Include="Telerik.UI.for.Blazor" Version="6.0.0" />
+		<PackageReference Include="Telerik.UI.for.Blazor" Version="6.0.2" />
 		<PackageReference Include="Microsoft.CognitiveServices.Speech" Version="1.37.0" />
 	</ItemGroup>
 
