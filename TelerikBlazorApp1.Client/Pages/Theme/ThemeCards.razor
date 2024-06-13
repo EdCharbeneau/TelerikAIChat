@@ -6,12 +6,9 @@
 
 <div class="pin-layout">
 
-    <CardListView Data="Data" OnDisliked="OnDisliked" OnLiked="OnLiked" OnSetAsTheme="OnSetAsTheme"/>
+    <CardListView Data="Data" OnDisliked="OnDisliked" OnLiked="OnLiked" OnSetAsTheme="OnSetAsTheme" />
 
-    @if (isLoading)
-    {
-        <CardSkeleton />
-    }
+    <CardSkeleton IsLoading="isLoading" />
 
     <TelerikCard Width="calc(500px + 1em)">
         <CardBody>

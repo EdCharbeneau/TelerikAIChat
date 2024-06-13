@@ -24,9 +24,19 @@
 .k-card-subtitle {
     color: var(--kendo-card-header-text);
 }
-.rainbow .k-skeleton-pulse .k-skeleton, .k-skeleton-pulse .k-placeholder-line, .k-skeleton-pulse.k-skeleton, .k-skeleton-pulse.k-placeholder-line {
+
+.rainbow-skeleton.k-card {
+    --kendo-color-primary: #FFF;
+    --kendo-card-header-text: #000;
+}
+
+.rainbow-skeleton .k-skeleton-pulse .k-skeleton,
+.rainbow-skeleton .k-skeleton-pulse .k-placeholder-line,
+.rainbow-skeleton .k-skeleton-pulse.k-skeleton,
+.rainbow-skeleton .k-skeleton-pulse.k-placeholder-line {
     animation: k-skeleton-pulse-rainbow 1.5s ease-in-out .5s infinite;
 }
+
 @keyframes k-skeleton-pulse-rainbow {
     0% {
         background: #33CCCC;
