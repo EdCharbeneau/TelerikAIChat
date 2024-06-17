@@ -1,6 +1,4 @@
-﻿using System.Net.Http.Json;
-using TelerikBlazorApp1.Client;
-using TelerikBlazorApp1.Client.Features.OpenAI.Services;
+﻿using TelerikBlazorApp1.Client.Features.OpenAI.Services;
 
 public record AiConversation(string userMessage, string assistantMessage);
 public class OpenAiHttpService(HttpClient httpClient) : IOpenAiService

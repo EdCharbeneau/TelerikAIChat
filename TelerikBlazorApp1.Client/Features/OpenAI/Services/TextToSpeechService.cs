@@ -1,7 +1,4 @@
-﻿using System.Net.Http.Json;
-using static System.Net.WebRequestMethods;
-
-namespace TelerikBlazorApp1.Client.Features.OpenAI.Services;
+﻿namespace TelerikBlazorApp1.Client.Features.OpenAI.Services;
 public class TextToSpeechService(HttpClient http) : ITextToSpeechService
 {
     public async Task<string> RequestTextToSpeak(string textToSpeak)
