@@ -1,8 +1,6 @@
 ﻿
-namespace TelerikBlazorApp1.Client.Services
+namespace TelerikBlazorApp1.Client.Services;
+public interface ITextToSpeechService
 {
-    public interface ITextToSpeechService
-    {
-        Task<string> RequestTextToSpeak(string textToSpeak);
-    }
+    Task<string> RequestTextToSpeak(string textToSpeak);
 }

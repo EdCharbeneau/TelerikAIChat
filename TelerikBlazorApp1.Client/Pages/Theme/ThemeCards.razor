@@ -1,12 +1,13 @@
 ﻿@page "/theme"
-@using System.Text.Json
-@using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
-@inject Blazored.LocalStorage.ILocalStorageService localStorage
 @inject ThemeState ThemeState
+@inject CardState CardState
 
 <div class="pin-layout">
 
-    <CardListView Data="Data" OnDisliked="OnDisliked" OnLiked="OnLiked" OnSetAsTheme="OnSetAsTheme" />
+    <CardListView Data="CardState.Data"
+                  OnDisliked="OnDisliked"
+                  OnLiked="OnLiked"
+                  OnSetAsTheme="OnSetAsTheme" />
 
     <CardSkeleton IsLoading="isLoading" />
 
@@ -17,70 +18,17 @@
 
             <TelerikUpload DropZoneId="dropzone-id"
                            OnUpload="OnUpload"
-                           OnError="@(()=> isLoading = false)"
+                           OnSuccess="@OnUploadSuccess"
+                           OnError="OnError"
                            SaveUrl="/upload"
                            MaxFileSize="@( 16 * 1024 * 1024 )"
-                           OnSuccess="@OnUploadSuccess" />
+                           AllowedExtensions="@(new List<string>() { ".jpg", ".png" })" />
         </CardBody>
         <CardActions>
-            <TelerikButton OnClick="ClearData">Clear Data</TelerikButton>
+            <TelerikButton OnClick="ClearData" ThemeColor="@(ThemeConstants.Button.ThemeColor.Warning)">Clear Data</TelerikButton>
         </CardActions>
     </TelerikCard>
 
 </div>
 
 
-@code {
-    bool isLoading;
-    public List<CardItem> Data { get; set; } = [];
-    string? responseText;
-
-    public void OnUpload() => isLoading = true;
-
-    protected override async Task OnInitializedAsync()
-    {
-        Data = await localStorage.GetItemAsync<List<CardItem>>("cardCache") ?? [];
-    }
-
-    private async Task ClearData()
-    {
-        await localStorage.ClearAsync();
-        Data = [];
-    }
-
-    private void OnSetAsTheme(CardItem item) => ThemeState.SetThemeColor(item.AccentColor);
-
-    private void OnLiked(CardItem item)
-    {
-        item.IsLiked = true;
-        item.Likes++;
-    }
-
-    private void OnDisliked(CardItem item)
-    {
-        item.IsLiked = false;
-        item.Likes--;
-    }
-
-    private async Task OnUploadSuccess(UploadSuccessEventArgs args)
-    {
-        string CapitalizeFirstLetter(string text) => text.ToUpper()[0] + text[1..];
-        if (args.Operation == UploadOperationType.Upload)
-        {
-            ImageAnalysis? analysis = JsonSerializer.Deserialize<ImageAnalysis>(args.Request.ResponseText, new JsonSerializerOptions(JsonSerializerDefaults.Web));
-            if (analysis is not null)
-            {
-                Data.Add(new()
-                    {
-                        AccentColor = $"#{analysis.Color.AccentColor}",
-                        ImageUrl = args.Files[0].Name,
-                        Title = CapitalizeFirstLetter(analysis.Description.Captions[0].Text + '.'),
-                        Description = analysis.Description.Tags.ToArray()
-                    });
-                await localStorage.SetItemAsync("cardCache", Data);
-            }
-
-        }
-        isLoading = false;
-    }
-}
