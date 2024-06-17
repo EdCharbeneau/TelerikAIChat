@@ -50,6 +50,15 @@ namespace TelerikBlazorApp1.AiServices
                 await myFiles[0].CopyToAsync(ms);
                 imgBytes = ms.ToArray();
 
+                // Define the path to the wwwroot directory
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", myFiles[0].FileName);
+
+                // Save the file to the wwwroot directory
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await myFiles[0].CopyToAsync(stream);
+                }
+
                 // Use the image data to Azure functionality
                 ImageAnalysis result = await vision.GetColorThemeReferenceFromImageUrl(imgBytes);
 
