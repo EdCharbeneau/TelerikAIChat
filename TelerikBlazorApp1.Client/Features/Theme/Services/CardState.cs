@@ -1,8 +1,7 @@
 using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
 using System.Text.Json;
-using TelerikBlazorApp1.Client.Pages.Theme;
 
-namespace TelerikBlazorApp1.Client.Services;
+namespace TelerikBlazorApp1.Client.Features.Theme.Services;
 
 public class CardState(Blazored.LocalStorage.ILocalStorageService localStorage)
 {
@@ -18,7 +17,8 @@ public class CardState(Blazored.LocalStorage.ILocalStorageService localStorage)
     }
 
     public async Task CardStateHasChanged() => await localStorage.SetItemAsync(nameof(CardState), Data);
-    public async Task ClearCardState() {
+    public async Task ClearCardState()
+    {
         Data = [];
         await CardStateHasChanged();
     }

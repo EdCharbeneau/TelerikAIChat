@@ -1,7 +1,7 @@
 ﻿using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
 using System.ComponentModel.DataAnnotations;
 
-namespace TelerikBlazorApp1.Client.Pages.Theme
+namespace TelerikBlazorApp1.Client.Features.Theme
 {
     public class CardItem
     {

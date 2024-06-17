@@ -1,6 +1,4 @@
-﻿using TelerikBlazorApp1.Client;
-
-namespace TelerikBlazorApp1.Client.Services;
+﻿namespace TelerikBlazorApp1.Client.Features.OpenAI.Services;
 public interface IOpenAiService
 {
     Task<string> MakeAiRequest(string prompt);

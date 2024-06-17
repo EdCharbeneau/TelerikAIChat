@@ -1,7 +1,7 @@
 ﻿using BlazorComponentUtilities;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace TelerikBlazorApp1.Client.Services;
+namespace TelerikBlazorApp1.Client.Features.Theme.Services;
 public class ThemeState
 {
     private string themeColor = "#003366";

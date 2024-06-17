@@ -3,8 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.JSInterop;
 using TelerikBlazorApp1.AiServices;
 using TelerikBlazorApp1.Client;
-using TelerikBlazorApp1.Client.Pages;
-using TelerikBlazorApp1.Client.Services;
+using TelerikBlazorApp1.Client.Features.OpenAI.Services;
 using TelerikBlazorApp1.Components;
 using TelerikBlazorApp1.Services;
 
@@ -46,7 +45,7 @@ app.UseAntiforgery();
 app.MapRazorComponents<App>()
     //.AddInteractiveServerRenderMode()
     .AddInteractiveWebAssemblyRenderMode()
-    .AddAdditionalAssemblies(typeof(Home).Assembly);
+    .AddAdditionalAssemblies(typeof(Routes).Assembly);
 
 app.MapAiEndpoints();
 

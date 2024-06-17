@@ -2,7 +2,7 @@
 using Azure.AI.OpenAI;
 
 using TelerikBlazorApp1.Client;
-using TelerikBlazorApp1.Client.Services;
+using TelerikBlazorApp1.Client.Features.OpenAI.Services;
 
 namespace TelerikBlazorApp1.Services
 {

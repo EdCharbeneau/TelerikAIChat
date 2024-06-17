@@ -1,4 +1,4 @@
-﻿using TelerikBlazorApp1.Client.Services;
+﻿using TelerikBlazorApp1.Client.Features.OpenAI.Services;
 using TelerikBlazorApp1.Services;
 
 namespace TelerikBlazorApp1.AiServices

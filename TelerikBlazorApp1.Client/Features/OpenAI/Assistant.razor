@@ -1,0 +1,31 @@
+﻿@page "/"
+@using TelerikBlazorApp1.Client.Features.OpenAI.Services
+@inject IOpenAiService service
+@inject ConversationState state
+@inject ISpeechRecognitionService SpeechRecognition
+@inject ITextToSpeechService TextToSpeech
+
+<TelerikAIPrompt @ref="@AIPromptRef"
+                 @bind-Prompt="@prompt"
+                 OnPromptRequest="@HandlePromptRequest"
+                 Width="500px">
+    <AIPromptViews>
+        <AIPromptPromptView ButtonText="Prompt" ButtonIcon="@SvgIcon.Comment">
+            <FooterTemplate>
+                <TelerikButton ThemeColor="@(ThemeConstants.Button.ThemeColor.Primary)" Icon="@SvgIcon.Sparkles" OnClick="@(()=>HandlePromptRequest(new() {Prompt = prompt}))">Generate</TelerikButton>
+                <TelerikButton OnClick="OnRecord">
+                    <TelerikLoader Class="loader-indicator" Size="@(ThemeConstants.Loader.Size.Small)" Visible="@isRecording"></TelerikLoader>
+                    🎙️
+                </TelerikButton>
+            </FooterTemplate>
+        </AIPromptPromptView>
+        <AIPromptOutputView ButtonText="Responses">
+            <FooterTemplate>
+                @if (isPlaying)
+                {
+                    <audio autoplay controls><source src="@audio" /></audio>
+                }
+            </FooterTemplate>
+        </AIPromptOutputView>
+    </AIPromptViews>
+</TelerikAIPrompt>

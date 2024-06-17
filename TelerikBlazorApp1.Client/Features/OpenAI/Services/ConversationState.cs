@@ -1,4 +1,4 @@
-﻿namespace TelerikBlazorApp1.Client.Services;
+﻿namespace TelerikBlazorApp1.Client.Features.OpenAI.Services;
 
 public record AiOutput(string Title, string Output, DateTime Timestamp);
 

@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
 using System.IO;
-using TelerikBlazorApp1.Client.Pages.Theme;
-using TelerikBlazorApp1.Client.Services;
+using TelerikBlazorApp1.Client.Features.OpenAI.Services;
 using TelerikBlazorApp1.Services;
 
 namespace TelerikBlazorApp1.AiServices

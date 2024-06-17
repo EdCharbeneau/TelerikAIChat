@@ -1,6 +1,7 @@
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using TelerikBlazorApp1.Client.Services;
+using TelerikBlazorApp1.Client.Features.OpenAI.Services;
+using TelerikBlazorApp1.Client.Features.Theme.Services;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 

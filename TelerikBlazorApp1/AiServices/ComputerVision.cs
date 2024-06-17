@@ -1,7 +1,6 @@
 ﻿using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
 using Microsoft.Azure.CognitiveServices.Vision.ComputerVision;
 using TelerikBlazorApp1.Services;
-using TelerikBlazorApp1.Client.Pages.Theme;
 
 namespace TelerikBlazorApp1.AiServices
 {

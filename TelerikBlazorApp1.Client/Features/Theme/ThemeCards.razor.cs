@@ -1,8 +1,6 @@
+namespace TelerikBlazorApp1.Client.Features.Theme;
 using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
 using System.Text.Json;
-using Telerik.Blazor.Components;
-
-namespace TelerikBlazorApp1.Client.Pages.Theme;
 public partial class ThemeCards
 {
     private bool isLoading;
