@@ -1,4 +1,3 @@
-using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using TelerikBlazorApp1.Client.Features.OpenAI.Services;
 using TelerikBlazorApp1.Client.Features.Theme.Services;
@@ -6,13 +5,8 @@ using TelerikBlazorApp1.Client.Features.Theme.Services;
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-builder.Services.AddScoped<IOpenAiService, OpenAiHttpService>();
-builder.Services.AddScoped<ConversationState>();
-builder.Services.AddScoped<ThemeState>();
-builder.Services.AddScoped<CardState>();
-builder.Services.AddScoped<ITextToSpeechService, TextToSpeechService>();
-builder.Services.AddSpeechRecognitionServices();
-builder.Services.AddBlazoredLocalStorageAsSingleton();
+builder.Services.AddOpenAiServices();
+builder.Services.AddThemeServices();
 
 builder.Services.AddTelerikBlazor();
 
