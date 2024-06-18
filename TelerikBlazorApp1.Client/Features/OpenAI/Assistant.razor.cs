@@ -1,7 +1,7 @@
 ﻿namespace TelerikBlazorApp1.Client.Features.OpenAI;
 public partial class Assistant
 {
-    bool isRecording = false;
+    bool isBusy = false;
     bool isPlaying = false;
     string? audio;
     public string prompt = "";
@@ -15,9 +15,16 @@ public partial class Assistant
     }
     public async Task HandlePromptRequest(AIPromptPromptRequestEventArgs args)
     {
+        isBusy = true;
+        if (string.IsNullOrWhiteSpace(args.Prompt))
+        {
+            args.Prompt = "I need a recipe for unicorn pie.";
+        }
+
         string result = await service.MakeAiRequest(args.Prompt);
         AIPromptRef?.AddOutput(result, "Prompt:", prompt, prompt, null, true);
         state.Add(new(result, args.Prompt, DateTime.UtcNow));
+        isBusy = false;
         await OnSpeak(result);
     }
 
@@ -36,12 +43,12 @@ public partial class Assistant
     }
     public void OnEnded()
     {
-        isRecording = false;
+        isBusy = false;
         StateHasChanged();
     }
     public void OnStarted()
     {
-        isRecording = true;
+        isBusy = true;
         StateHasChanged();
     }
     public async Task OnSpeak(string textToSpeak)

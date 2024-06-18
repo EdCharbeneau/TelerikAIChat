@@ -12,11 +12,16 @@
     <AIPromptViews>
         <AIPromptPromptView ButtonText="Prompt" ButtonIcon="@SvgIcon.Comment">
             <FooterTemplate>
-                <TelerikButton ThemeColor="@(ThemeConstants.Button.ThemeColor.Primary)" Icon="@SvgIcon.Sparkles" OnClick="@(()=>HandlePromptRequest(new() {Prompt = prompt}))">Generate</TelerikButton>
-                <TelerikButton OnClick="OnRecord">
-                    <TelerikLoader Class="loader-indicator" Size="@(ThemeConstants.Loader.Size.Small)" Visible="@isRecording"></TelerikLoader>
-                    🎙️
-                </TelerikButton>
+                <div class="k-actions k-actions-start k-actions-horizontal k-prompt-actions">
+                    <TelerikButton ThemeColor="@(ThemeConstants.Button.ThemeColor.Primary)" Icon="@SvgIcon.Sparkles" OnClick="@(()=>HandlePromptRequest(new() {Prompt = prompt}))" Enabled="!isBusy">
+                        <TelerikLoader Class="loader-indicator" ThemeColor="@(ThemeConstants.Loader.ThemeColor.Light)" Size="@(ThemeConstants.Loader.Size.Small)" Visible="isBusy"></TelerikLoader>
+                        @(isBusy ? "Generating" : "Generate")
+                    </TelerikButton>
+                    <TelerikButton OnClick="OnRecord" Enabled="!isBusy">
+                        <TelerikLoader Class="loader-indicator" Size="@(ThemeConstants.Loader.Size.Small)" Visible="isBusy"></TelerikLoader>
+                        🎙️
+                    </TelerikButton>
+                </div>
             </FooterTemplate>
         </AIPromptPromptView>
         <AIPromptOutputView ButtonText="Responses">
