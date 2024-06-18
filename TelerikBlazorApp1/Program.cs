@@ -1,11 +1,6 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.JSInterop;
 using TelerikBlazorApp1.AiServices;
 using TelerikBlazorApp1.Client;
-using TelerikBlazorApp1.Client.Features.OpenAI.Services;
 using TelerikBlazorApp1.Components;
-using TelerikBlazorApp1.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,7 +38,6 @@ app.UseStaticFiles();
 app.UseAntiforgery();
 
 app.MapRazorComponents<App>()
-    //.AddInteractiveServerRenderMode()
     .AddInteractiveWebAssemblyRenderMode()
     .AddAdditionalAssemblies(typeof(Routes).Assembly);
 
